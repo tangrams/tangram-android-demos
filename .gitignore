@@ -30,3 +30,10 @@ proguard/
 
 # Android Studio captures folder
 captures/
+
+# Intellij
+*.iml
+.idea/
+
+# Ignore Gradle GUI config
+gradle-app.setting
