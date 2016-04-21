@@ -1,1 +1,1 @@
-include ':simplemap'
+include ':simplemap', ':mapmovement'
