@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mapzen.tangram.demos.markers.MainActivity">
+
+    <com.mapzen.tangram.MapView
+        android:id="@+id/map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/background_light">
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="vertical">
+            <RadioButton android:id="@+id/radio_points"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Edit points"
+                         android:onClick="onRadioButtonClicked"/>
+            <RadioButton android:id="@+id/radio_lines"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Edit line segments"
+                         android:onClick="onRadioButtonClicked"/>
+            <RadioButton android:id="@+id/radio_polygons"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Edit polygons"
+                         android:onClick="onRadioButtonClicked"/>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/clear_button"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:text="Clear"/>
+    </LinearLayout>
+
+</RelativeLayout>
