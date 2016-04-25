@@ -35,8 +35,14 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
         map = mapController;
 
         map.setFeaturePickListener(new MapController.FeaturePickListener() {
+            // A scene file can declare certain groups of features to be 'interactive', meaning that
+            // they can be selected in a call to pickFeature(). If an 'interactive' feature is found
+            // at the given position, its information is returned in onFeaturePick. If no
+            // 'interactive' feature is found, onFeaturePick won't be called.
             @Override
             public void onFeaturePick(Map<String, String> properties, float x, float y) {
+                // After a feature is picked from the map, we receive a map of 'properties' as
+                // string keys and values, as well as the screen position of the feature's center.
                 textWindow.setText("Selected feature properties:");
                 for (Map.Entry entry : properties.entrySet()) {
                     textWindow.append("\n" + entry.getKey() + " : " + entry.getValue());

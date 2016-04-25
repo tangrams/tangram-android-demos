@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
     public void onMapReady(MapController mapController) {
         map = mapController;
 
+        // These calls create new data sources in the scene with the names given.
+        // The scene already has layers defined to provide styling for features from these sources.
         points = map.addDataLayer("mz_default_point");
         lines = map.addDataLayer("mz_default_line");
         polygons = map.addDataLayer("mz_default_polygon");
@@ -87,6 +89,29 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
         });
     }
 
+    public void onRadioButtonClicked(View view) {
+
+        boolean checked = ((RadioButton) view).isChecked();
+
+        if (!checked) {
+            return;
+        }
+
+        taps.clear();
+
+        switch(view.getId()) {
+            case R.id.radio_points:
+                current = points;
+                break;
+            case R.id.radio_lines:
+                current = lines;
+                break;
+            case R.id.radio_polygons:
+                current = polygons;
+                break;
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -109,28 +134,5 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
     public void onLowMemory() {
         super.onLowMemory();
         view.onLowMemory();
-    }
-
-    public void onRadioButtonClicked(View view) {
-
-        boolean checked = ((RadioButton) view).isChecked();
-
-        if (!checked) {
-            return;
-        }
-
-        taps.clear();
-
-        switch(view.getId()) {
-            case R.id.radio_points:
-                current = points;
-                break;
-            case R.id.radio_lines:
-                current = lines;
-                break;
-            case R.id.radio_polygons:
-                current = polygons;
-                break;
-        }
     }
 }

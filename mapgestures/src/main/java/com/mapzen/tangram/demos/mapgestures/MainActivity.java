@@ -50,11 +50,16 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
                 float tilt = (startY - endY) / 400;
                 map.setRotation(map.getRotation() + rotate);
                 map.setTilt(map.getTilt() + tilt);
+
+                // Returning 'true' means that this gesture event is 'consumed' and won't be passed
+                // on to any other handlers. We return 'true' here so that the map doesn't do the
+                // built-in 'panning' behavior.
                 return true;
             }
 
             @Override
             public boolean onFling(float posX, float posY, float velocityX, float velocityY) {
+                // We return 'true' here as well, otherwise a flinging gesture will make the map pan
                 return true;
             }
         });
@@ -62,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
         map.setShoveResponder(new TouchInput.ShoveResponder() {
             @Override
             public boolean onShove(float distance) {
+                // We return 'true' here so that the built-in tilting behavior doesn't occur.
                 return true;
             }
         });

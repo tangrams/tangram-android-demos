@@ -26,6 +26,23 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
 
     }
 
+    public void onCheckBoxClicked(View view) {
+        CheckBox checkbox = (CheckBox)view;
+        String visible = checkbox.isChecked() ? "true" : "false";
+        String name = (String)checkbox.getText();
+
+        if (map == null) {
+            return;
+        }
+
+        // Scene updates are written to match the structure of the scene file.
+        // Our check boxes have the same names as layers in our scene, so we'll use the names to
+        // turn layers on and off individually using the 'visible' property.
+        map.queueSceneUpdate("layers." + name + ".visible", visible);
+        map.applySceneUpdates();
+        map.requestRender();
+    }
+
     @Override
     public void onMapReady(MapController mapController) {
         map = mapController;
@@ -53,15 +70,5 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
     public void onLowMemory() {
         super.onLowMemory();
         view.onLowMemory();
-    }
-
-    public void onCheckBoxClicked(View view) {
-        CheckBox checkbox = (CheckBox)view;
-        String visible = checkbox.isChecked() ? "true" : "false";
-        String name = (String)checkbox.getText();
-
-        map.queueSceneUpdate("layers." + name + ".visible", visible);
-        map.applySceneUpdates();
-        map.requestRender();
     }
 }
