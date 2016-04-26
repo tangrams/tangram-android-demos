@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);
-        view.getMapAsync(this, "bubble-wrap.yaml");
+        view.getMapAsync(this, "bubble-wrap/bubble-wrap.yaml");
 
         clearButton = (Button)findViewById(R.id.clear_button);
     }
