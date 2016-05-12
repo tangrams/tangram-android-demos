@@ -54,6 +54,35 @@
             android:onClick="onCheckBoxClicked"
             android:checked="true"
             android:text="landuse"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Camera"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/textView" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="isometric"
+                android:id="@+id/radioButton2"
+                android:onClick="onRadioClicked" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="perspective"
+                android:id="@+id/radioButton"
+                android:checked="true"
+                android:onClick="onRadioClicked" />
+        </RadioGroup>
+
     </LinearLayout>
 
 </RelativeLayout>

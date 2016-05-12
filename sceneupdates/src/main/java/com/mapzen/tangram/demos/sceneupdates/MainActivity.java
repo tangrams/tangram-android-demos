@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.ToggleButton;
 
 import com.mapzen.tangram.MapController;
@@ -43,6 +44,31 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
         map.requestRender();
     }
 
+    public void onRadioClicked(View view) {
+        RadioButton checkbox = (RadioButton)view;
+        String name = (String)checkbox.getText();
+
+        if (map == null) {
+            return;
+        }
+
+        if ("isometric".equals(name)) {
+            map.queueSceneUpdate("cameras", "{isometric: {type: isometric}}");
+            map.applySceneUpdates();
+
+            map.setZoomEased(15, 1000, MapController.EaseType.LINEAR);
+            map.setTiltEased((float)Math.toRadians(0), 1000, MapController.EaseType.CUBIC);
+
+        } else if ("perspective".equals(name)) {
+            map.setZoomEased(17, 1000, MapController.EaseType.LINEAR);
+            map.setTiltEased((float)Math.toRadians(60), 1000, MapController.EaseType.CUBIC);
+
+            map.queueSceneUpdate("cameras", "{isometric: {type: perspective}}");
+            map.applySceneUpdates();
+        }
+
+        map.requestRender();
+    }
     @Override
     public void onMapReady(MapController mapController) {
         map = mapController;
