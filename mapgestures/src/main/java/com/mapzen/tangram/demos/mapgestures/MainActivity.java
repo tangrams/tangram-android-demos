@@ -1,5 +1,6 @@
 package com.mapzen.tangram.demos.mapgestures;
 
+import android.graphics.PointF;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
         map.setTapResponder(new TouchInput.TapResponder() {
             @Override
             public boolean onSingleTapUp(float x, float y) {
-                LngLat point = map.coordinatesAtScreenPosition(x, y);
+                LngLat point = map.screenPositionToLngLat(new PointF(x, y));
                 map.setPositionEased(point, 1000);
                 return false;
             }
