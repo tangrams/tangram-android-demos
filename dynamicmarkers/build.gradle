@@ -29,5 +29,5 @@ repositories {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.mapzen.tangram:tangram:0.4.4.1-SNAPSHOT'
+    compile 'com.mapzen.tangram:tangram:0.4.4-SNAPSHOT'
 }
