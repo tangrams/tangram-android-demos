@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
         view.onCreate(savedInstanceState);
 
         // This starts a background process to set up the map.
-        view.getMapAsync(this, "scene.yaml");
+        view.getMapAsync(this, "bubble-wrap/bubble-wrap.yaml");
     }
 
     @Override
