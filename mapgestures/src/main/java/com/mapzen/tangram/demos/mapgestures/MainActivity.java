@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);
-        view.getMapAsync(this, "scene.yaml");
+        view.getMapAsync(this, "bubble-wrap/bubble-wrap.yaml");
 
     }
 

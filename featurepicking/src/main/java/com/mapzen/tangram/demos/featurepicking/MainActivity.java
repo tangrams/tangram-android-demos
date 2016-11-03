@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);
-        view.getMapAsync(this, "scene.yaml");
+        view.getMapAsync(this, "bubble-wrap/bubble-wrap.yaml");
 
         textWindow = (TextView)findViewById(R.id.textWindow);
         textWindow.setText("Tap an icon on the map.");
