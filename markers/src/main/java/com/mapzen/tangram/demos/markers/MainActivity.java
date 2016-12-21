@@ -9,9 +9,11 @@ import android.widget.RadioButton;
 
 import com.mapzen.tangram.LngLat;
 import com.mapzen.tangram.MapController;
-import com.mapzen.tangram.MapData;
 import com.mapzen.tangram.MapView;
+import com.mapzen.tangram.Marker;
 import com.mapzen.tangram.TouchInput;
+import com.mapzen.tangram.geometry.Polygon;
+import com.mapzen.tangram.geometry.Polyline;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +23,15 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
     MapController map;
     MapView view;
 
-    MapData points;
-    MapData lines;
-    MapData polygons;
+    Marker pointMarker;
+    Marker lineMarker;
+    Marker polygonMarker;
 
-    MapData current;
+    String pointStyle = "{ style: 'points', color: 'white', size: [50px, 50px], order: 2000, collide: false }";
+    String lineStyle = "{ style: 'lines', color: '#06a6d4', width: 5px, order: 2000 }";
+    String polygonStyle = "{ style: 'polygons', color: '#06a6d4', width: 5px, order: 2000 }";
+
+    Marker current;
 
     Button clearButton;
 
@@ -47,18 +53,12 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
     public void onMapReady(MapController mapController) {
         map = mapController;
 
-        // These calls create new data sources in the scene with the names given.
-        // The scene already has layers defined to provide styling for features from these sources.
-        points = map.addDataLayer("mz_default_point");
-        lines = map.addDataLayer("mz_default_line");
-        polygons = map.addDataLayer("mz_default_polygon");
+        resetMarkers();
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (current != null) {
-                    current.clear();
-                }
+            resetMarkers();
             }
         });
 
@@ -67,16 +67,16 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
             public boolean onSingleTapUp(float x, float y) {
                 LngLat tap = map.screenPositionToLngLat(new PointF(x, y));
                 taps.add(tap);
-                if (current == points) {
-                    points.addPoint(tap, null);
+                if (current == pointMarker) {
+                    pointMarker.setPoint(tap);
                     taps.clear();
-                } else if (current == lines && taps.size() >= 2) {
-                    lines.addPolyline(taps, null);
+                } else if (current == lineMarker && taps.size() >= 2) {
+                    lineMarker.setPolyline(new Polyline(taps, null));
                     taps.remove(0);
-                } else if (current == polygons && taps.size() >= 3) {
+                } else if (current == polygonMarker && taps.size() >= 3) {
                     ArrayList<List<LngLat>> polygon = new ArrayList<>();
                     polygon.add(taps);
-                    polygons.addPolygon(polygon, null);
+                    polygonMarker.setPolygon(new Polygon(polygon, null));
                     taps.remove(0);
                 }
                 map.requestRender();
@@ -88,6 +88,23 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
                 return false;
             }
         });
+    }
+
+    void resetMarkers() {
+        map.removeAllMarkers();
+        pointMarker = null;
+        lineMarker = null;
+        polygonMarker = null;
+
+        pointMarker = map.addMarker();
+        pointMarker.setStyling(pointStyle);
+        pointMarker.setDrawable(R.drawable.mapzen_logo);
+
+        lineMarker = map.addMarker();
+        lineMarker.setStyling(lineStyle);
+
+        polygonMarker = map.addMarker();
+        polygonMarker.setStyling(polygonStyle);
     }
 
     public void onRadioButtonClicked(View view) {
@@ -102,13 +119,13 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
 
         switch(view.getId()) {
             case R.id.radio_points:
-                current = points;
+                current = pointMarker;
                 break;
             case R.id.radio_lines:
-                current = lines;
+                current = lineMarker;
                 break;
             case R.id.radio_polygons:
-                current = polygons;
+                current = polygonMarker;
                 break;
         }
     }
