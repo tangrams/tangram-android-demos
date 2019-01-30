@@ -37,3 +37,6 @@ captures/
 
 # Ignore Gradle GUI config
 gradle-app.setting
+
+# macOS
+.DS_Store
