@@ -4,14 +4,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.mapzen.tangram.FeaturePickListener;
 import com.mapzen.tangram.MapController;
 import com.mapzen.tangram.MapView;
+import com.mapzen.tangram.SceneUpdate;
 import com.mapzen.tangram.TouchInput;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements MapView.OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements MapView.MapReadyCallback {
 
     MapController map;
     MapView view;
@@ -24,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);
-        view.getMapAsync(this, "bubble-wrap/bubble-wrap.yaml");
+        view.getMapAsync(this);
 
         textWindow = (TextView)findViewById(R.id.textWindow);
         textWindow.setText("Tap an icon on the map.");
@@ -34,7 +37,13 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
     public void onMapReady(MapController mapController) {
         map = mapController;
 
-        map.setFeaturePickListener(new MapController.FeaturePickListener() {
+        // Set our API key as a scene update.
+        List<SceneUpdate> updates = new ArrayList<>();
+        updates.add(new SceneUpdate("global.sdk_api_key", BuildConfig.NEXTZEN_API_KEY));
+
+        map.loadSceneFileAsync("bubble-wrap/bubble-wrap-style.yaml", updates);
+
+        map.setFeaturePickListener(new FeaturePickListener() {
             // A scene file can declare certain groups of features to be 'interactive', meaning that
             // they can be selected in a call to pickFeature(). If an 'interactive' feature is found
             // at the given position, its information is returned in onFeaturePick. If no
@@ -50,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
             }
         });
 
-        map.setTapResponder(new TouchInput.TapResponder() {
+        map.getTouchInput().setTapResponder(new TouchInput.TapResponder() {
             @Override
             public boolean onSingleTapUp(float x, float y) {
                 return false;

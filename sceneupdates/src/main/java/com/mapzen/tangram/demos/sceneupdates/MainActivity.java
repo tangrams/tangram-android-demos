@@ -9,8 +9,13 @@ import android.widget.ToggleButton;
 
 import com.mapzen.tangram.MapController;
 import com.mapzen.tangram.MapView;
+import com.mapzen.tangram.SceneUpdate;
 
-public class MainActivity extends AppCompatActivity implements MapView.OnMapReadyCallback {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements MapView.MapReadyCallback {
 
     MapController map;
     MapView view;
@@ -22,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);
-        view.getMapAsync(this, "bubble-wrap/bubble-wrap.yaml");
+        view.getMapAsync(this);
 
     }
 
@@ -38,14 +43,20 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
         // Scene updates are written to match the structure of the scene file.
         // Our check boxes have the same names as layers in our scene, so we'll use the names to
         // turn layers on and off individually using the 'visible' property.
-        map.queueSceneUpdate("layers." + name + ".visible", visible);
-        map.applySceneUpdates();
-        map.requestRender();
+        List<SceneUpdate> updates = new ArrayList<>();
+        updates.add(new SceneUpdate("layers." + name + ".visible", visible));
+        map.updateSceneAsync(updates);
     }
 
     @Override
     public void onMapReady(MapController mapController) {
         map = mapController;
+
+        // Set our API key as a scene update.
+        List<SceneUpdate> updates = new ArrayList<>();
+        updates.add(new SceneUpdate("global.sdk_api_key", BuildConfig.NEXTZEN_API_KEY));
+
+        map.loadSceneFileAsync("bubble-wrap/bubble-wrap-style.yaml", updates);
     }
 
     @Override

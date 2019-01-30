@@ -3,12 +3,15 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
 
+    def apiKey = project.hasProperty('nextzenApiKey') ? nextzenApiKey : System.getenv('NEXTZEN_API_KEY')
+
     defaultConfig {
         applicationId "com.mapzen.tangram.demos.simplemap"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        buildConfigField 'String', 'NEXTZEN_API_KEY', '"' + apiKey + '"'
     }
     buildTypes {
         release {

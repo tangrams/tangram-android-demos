@@ -5,12 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.mapzen.tangram.CameraUpdateFactory;
 import com.mapzen.tangram.LngLat;
 import com.mapzen.tangram.MapController;
 import com.mapzen.tangram.MapView;
+import com.mapzen.tangram.SceneUpdate;
 import com.mapzen.tangram.TouchInput;
 
-public class MainActivity extends AppCompatActivity implements MapView.OnMapReadyCallback {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements MapView.MapReadyCallback {
 
     MapController map;
     MapView view;
@@ -22,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);
-        view.getMapAsync(this, "bubble-wrap/bubble-wrap.yaml");
+        view.getMapAsync(this);
 
     }
 
@@ -30,11 +35,19 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
     public void onMapReady(MapController mapController) {
         map = mapController;
 
-        map.setTapResponder(new TouchInput.TapResponder() {
+        // Set our API key as a scene update.
+        List<SceneUpdate> updates = new ArrayList<>();
+        updates.add(new SceneUpdate("global.sdk_api_key", BuildConfig.NEXTZEN_API_KEY));
+
+        map.loadSceneFileAsync("bubble-wrap/bubble-wrap-style.yaml", updates);
+
+        TouchInput touchInput = map.getTouchInput();
+
+        touchInput.setTapResponder(new TouchInput.TapResponder() {
             @Override
             public boolean onSingleTapUp(float x, float y) {
                 LngLat point = map.screenPositionToLngLat(new PointF(x, y));
-                map.setPositionEased(point, 1000);
+                map.updateCameraPosition(CameraUpdateFactory.setPosition(point), 1000);
                 return false;
             }
 
@@ -44,13 +57,18 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
             }
         });
 
-        map.setPanResponder(new TouchInput.PanResponder() {
+        touchInput.setPanResponder(new TouchInput.PanResponder() {
+            @Override
+            public boolean onPanBegin() {
+                return false;
+            }
+
             @Override
             public boolean onPan(float startX, float startY, float endX, float endY) {
                 float rotate = (startX - endX) / 400;
                 float tilt = (startY - endY) / 400;
-                map.setRotation(map.getRotation() + rotate);
-                map.setTilt(map.getTilt() + tilt);
+                map.updateCameraPosition(CameraUpdateFactory.rotateBy(rotate));
+                map.updateCameraPosition(CameraUpdateFactory.tiltBy(tilt));
 
                 // Returning 'true' means that this gesture event is 'consumed' and won't be passed
                 // on to any other handlers. We return 'true' here so that the map doesn't do the
@@ -59,19 +77,24 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
             }
 
             @Override
+            public boolean onPanEnd() {
+                return false;
+            }
+
+            @Override
             public boolean onFling(float posX, float posY, float velocityX, float velocityY) {
                 // We return 'true' here as well, otherwise a flinging gesture will make the map pan
                 return true;
             }
-        });
 
-        map.setShoveResponder(new TouchInput.ShoveResponder() {
             @Override
-            public boolean onShove(float distance) {
-                // We return 'true' here so that the built-in tilting behavior doesn't occur.
-                return true;
+            public boolean onCancelFling() {
+                return false;
             }
         });
+
+        // Disable built-int "shove" gesture to tilt.
+        touchInput.setGestureDisabled(TouchInput.Gestures.SHOVE);
 
     }
 

@@ -5,8 +5,12 @@ import android.os.Bundle;
 
 import com.mapzen.tangram.MapController;
 import com.mapzen.tangram.MapView;
+import com.mapzen.tangram.SceneUpdate;
 
-public class MainActivity extends AppCompatActivity implements MapView.OnMapReadyCallback {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements MapView.MapReadyCallback {
 
     // MapController is the main class used to interact with a Tangram map.
     MapController map;
@@ -26,13 +30,19 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
         view.onCreate(savedInstanceState);
 
         // This starts a background process to set up the map.
-        view.getMapAsync(this, "bubble-wrap/bubble-wrap.yaml");
+        view.getMapAsync(this);
     }
 
     @Override
     public void onMapReady(MapController mapController) {
         // We receive a MapController object in this callback when the map is ready for use.
         map = mapController;
+
+        // Set our API key as a scene update.
+        List<SceneUpdate> updates = new ArrayList<>();
+        updates.add(new SceneUpdate("global.sdk_api_key", BuildConfig.NEXTZEN_API_KEY));
+
+        map.loadSceneFileAsync("bubble-wrap/bubble-wrap-style.yaml", updates);
     }
 
     // Below are the remaining Activity lifecycle events that must be forwarded to our MapView.

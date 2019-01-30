@@ -11,6 +11,7 @@ import com.mapzen.tangram.LngLat;
 import com.mapzen.tangram.MapController;
 import com.mapzen.tangram.MapView;
 import com.mapzen.tangram.Marker;
+import com.mapzen.tangram.SceneUpdate;
 import com.mapzen.tangram.TouchInput;
 import com.mapzen.tangram.geometry.Polygon;
 import com.mapzen.tangram.geometry.Polyline;
@@ -18,7 +19,7 @@ import com.mapzen.tangram.geometry.Polyline;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MapView.OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements MapView.MapReadyCallback {
 
     MapController map;
     MapView view;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);
-        view.getMapAsync(this, "bubble-wrap/bubble-wrap.yaml");
+        view.getMapAsync(this);
 
         clearButton = (Button)findViewById(R.id.clear_button);
     }
@@ -52,6 +53,12 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
     @Override
     public void onMapReady(MapController mapController) {
         map = mapController;
+
+        // Set our API key as a scene update.
+        List<SceneUpdate> updates = new ArrayList<>();
+        updates.add(new SceneUpdate("global.sdk_api_key", BuildConfig.NEXTZEN_API_KEY));
+
+        map.loadSceneFileAsync("bubble-wrap/bubble-wrap-style.yaml", updates);
 
         resetMarkers();
 
@@ -62,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
             }
         });
 
-        map.setTapResponder(new TouchInput.TapResponder() {
+        map.getTouchInput().setTapResponder(new TouchInput.TapResponder() {
             @Override
             public boolean onSingleTapUp(float x, float y) {
                 LngLat tap = map.screenPositionToLngLat(new PointF(x, y));
@@ -97,14 +104,14 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
         polygonMarker = null;
 
         pointMarker = map.addMarker();
-        pointMarker.setStyling(pointStyle);
+        pointMarker.setStylingFromString(pointStyle);
         pointMarker.setDrawable(R.drawable.mapzen_logo);
 
         lineMarker = map.addMarker();
-        lineMarker.setStyling(lineStyle);
+        lineMarker.setStylingFromString(lineStyle);
 
         polygonMarker = map.addMarker();
-        polygonMarker.setStyling(polygonStyle);
+        polygonMarker.setStylingFromString(polygonStyle);
     }
 
     public void onRadioButtonClicked(View view) {

@@ -5,33 +5,37 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioButton;
 
+import com.mapzen.tangram.CameraPosition;
 import com.mapzen.tangram.LngLat;
 import com.mapzen.tangram.MapController;
 import com.mapzen.tangram.MapView;
+import com.mapzen.tangram.SceneUpdate;
 
-public class MainActivity extends AppCompatActivity implements MapView.OnMapReadyCallback {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements MapView.MapReadyCallback {
 
     MapController map;
     MapView view;
 
     // Just for this demo, we define an enum type called 'Landmark' that helps control the map view.
     public enum Landmark {
-        WORLD_TRADE_CENTER(new LngLat(-74.012477, 40.712454), 16f, (float)Math.toRadians(45), (float)Math.toRadians(-15)),
-        EMPIRE_STATE_BUILDING(new LngLat(-73.986431, 40.748275), 16f, (float)Math.toRadians(65.25), (float)Math.toRadians(85)),
-        CENTRAL_PARK_ZOO(new LngLat(-73.963918, 40.779414), 14.75f, (float)Math.toRadians(36), (float)Math.toRadians(-36)),
+        WORLD_TRADE_CENTER(-74.012477, 40.712454, 16f, (float)Math.toRadians(45), (float)Math.toRadians(-15)),
+        EMPIRE_STATE_BUILDING(-73.986431, 40.748275, 16f, (float)Math.toRadians(65.25), (float)Math.toRadians(85)),
+        CENTRAL_PARK_ZOO(-73.963918, 40.779414, 14.75f, (float)Math.toRadians(36), (float)Math.toRadians(-36)),
         ;
 
-        Landmark(LngLat p, float z, float t, float r) {
-            position = p;
-            zoom = z;
-            tilt = t;
-            rotation = r;
+        Landmark(double lng, double lat, float z, float t, float r) {
+            camera = new CameraPosition();
+            camera.longitude = lng;
+            camera.latitude = lat;
+            camera.zoom = z;
+            camera.tilt = t;
+            camera.rotation = r;
         }
 
-        LngLat position;
-        float zoom;
-        float tilt;
-        float rotation;
+        CameraPosition camera;
     }
 
     @Override
@@ -41,12 +45,18 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);
-        view.getMapAsync(this, "bubble-wrap/bubble-wrap.yaml");
+        view.getMapAsync(this);
     }
 
     @Override
     public void onMapReady(MapController mapController) {
         map = mapController;
+
+        // Set our API key as a scene update.
+        List<SceneUpdate> updates = new ArrayList<>();
+        updates.add(new SceneUpdate("global.sdk_api_key", BuildConfig.NEXTZEN_API_KEY));
+
+        map.loadSceneFileAsync("bubble-wrap/bubble-wrap-style.yaml", updates);
     }
 
     public void onRadioButtonClicked(View view) {
@@ -80,10 +90,7 @@ public class MainActivity extends AppCompatActivity implements MapView.OnMapRead
 
         // We use the position, zoom, tilt, and rotation of the Landmark to move the camera over time.
         // Different types of "easing" are available to make the transition smoother or sharper.
-        map.setPositionEased(landmark.position, duration, MapController.EaseType.CUBIC);
-        map.setZoomEased(landmark.zoom, duration, MapController.EaseType.LINEAR);
-        map.setTiltEased(landmark.tilt, duration, MapController.EaseType.CUBIC);
-        map.setRotationEased(landmark.rotation, duration, MapController.EaseType.CUBIC);
+        map.flyToCameraPosition(landmark.camera, duration, null);
     }
 
     @Override
