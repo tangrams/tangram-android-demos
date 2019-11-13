@@ -1,9 +1,8 @@
 package com.mapzen.tangram.demos.mapgestures;
 
 import android.graphics.PointF;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.mapzen.tangram.CameraUpdateFactory;
 import com.mapzen.tangram.LngLat;

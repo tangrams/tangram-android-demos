@@ -1,6 +1,6 @@
 package com.mapzen.tangram.demos.simplemap;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.mapzen.tangram.MapController;
