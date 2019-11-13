@@ -41,7 +41,12 @@ public class MainActivity extends AppCompatActivity implements MapView.MapReadyC
         List<SceneUpdate> updates = new ArrayList<>();
         updates.add(new SceneUpdate("global.sdk_api_key", BuildConfig.NEXTZEN_API_KEY));
 
-        map.loadSceneFileAsync("bubble-wrap/bubble-wrap-style.yaml", updates);
+        // Customize bubble-wrap by importing the main scene file and then a theme to add more labels.
+        String sceneYaml = "import: [ bubble-wrap/bubble-wrap-style.yaml, bubble-wrap/themes/label-10.yaml ]";
+        map.loadSceneYamlAsync(sceneYaml, "", updates);
+
+        // Increase the radius for feature picking to make selecting labels easier.
+        map.setPickRadius(10);
 
         map.setFeaturePickListener(new FeaturePickListener() {
             // A scene file can declare certain groups of features to be 'interactive', meaning that
