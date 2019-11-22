@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/android:api-29
+    environment:
+      GRADLE_OPTS: -Xmx2048m
+    steps:
+      - checkout
+      - run: git submodule update --init
+      - run: ./gradlew assembleDebug
+workflows:
+  version: 2
+  build-samples:
+    jobs:
+      # Run on all pushes
+      - build
