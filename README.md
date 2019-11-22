@@ -1,4 +1,7 @@
 # tangram-android-demos
+
+[![CircleCI](https://circleci.com/gh/tangrams/tangram-android-demos.svg?style=svg)](https://circleci.com/gh/tangrams/tangram-android-demos)
+
 Sample applications using the Tangram Android SDK
 
 The samples here show several things you can do with a Tangram map:
