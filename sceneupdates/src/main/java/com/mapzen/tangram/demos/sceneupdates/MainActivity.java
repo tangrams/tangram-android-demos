@@ -1,21 +1,26 @@
 package com.mapzen.tangram.demos.sceneupdates;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapzen.tangram.MapController;
 import com.mapzen.tangram.MapView;
 import com.mapzen.tangram.SceneUpdate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MapView.MapReadyCallback {
 
     MapController map;
     MapView view;
+
+    SceneUpdate apiKeySceneUpdate = new SceneUpdate("global.sdk_api_key", BuildConfig.NEXTZEN_API_KEY);
+    String sceneFilePath = "bubble-wrap/bubble-wrap-style.yaml";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +45,23 @@ public class MainActivity extends AppCompatActivity implements MapView.MapReadyC
         // Scene updates are written to match the structure of the scene file.
         // Our check boxes have the same names as layers in our scene, so we'll use the names to
         // turn layers on and off individually using the 'visible' property.
-        List<SceneUpdate> updates = new ArrayList<>();
-        updates.add(new SceneUpdate("layers." + name + ".visible", visible));
-        map.updateSceneAsync(updates);
+        updateScene(new SceneUpdate("layers." + name + ".visible", visible));
+    }
+
+    private void updateScene(SceneUpdate... updates) {
+        List<SceneUpdate> updateList = new ArrayList<>(Arrays.asList(updates));
+
+        // Always apply the API key to the scene as an update.
+        updateList.add(apiKeySceneUpdate);
+
+        map.loadSceneFileAsync(sceneFilePath, updateList);
     }
 
     @Override
     public void onMapReady(MapController mapController) {
         map = mapController;
 
-        // Set our API key as a scene update.
-        List<SceneUpdate> updates = new ArrayList<>();
-        updates.add(new SceneUpdate("global.sdk_api_key", BuildConfig.NEXTZEN_API_KEY));
-
-        map.loadSceneFileAsync("bubble-wrap/bubble-wrap-style.yaml", updates);
+        updateScene();
     }
 
     @Override
