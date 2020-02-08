@@ -1,14 +1,20 @@
 package com.mapzen.tangram.demos.sceneupdates;
 
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.mapzen.tangram.LngLat;
 import com.mapzen.tangram.MapController;
+import com.mapzen.tangram.MapData;
 import com.mapzen.tangram.MapView;
 import com.mapzen.tangram.SceneUpdate;
+import com.mapzen.tangram.TouchInput;
+import com.mapzen.tangram.geometry.Geometry;
+import com.mapzen.tangram.geometry.Point;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +27,9 @@ public class MainActivity extends AppCompatActivity implements MapView.MapReadyC
 
     SceneUpdate apiKeySceneUpdate = new SceneUpdate("global.sdk_api_key", BuildConfig.NEXTZEN_API_KEY);
     String sceneFilePath = "bubble-wrap/bubble-wrap-style.yaml";
+
+    MapData tappedLocationData;
+    List<Geometry> tappedLocations = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +71,26 @@ public class MainActivity extends AppCompatActivity implements MapView.MapReadyC
         map = mapController;
 
         updateScene();
+
+        tappedLocationData = map.addDataLayer("mz_default_point");
+
+        map.getTouchInput().setTapResponder(new TouchInput.TapResponder() {
+            @Override
+            public boolean onSingleTapUp(float x, float y) {
+                return false;
+            }
+
+            @Override
+            public boolean onSingleTapConfirmed(float x, float y) {
+                LngLat location = map.screenPositionToLngLat(new PointF(x, y));
+
+                tappedLocations.add(new Point(location, null));
+
+                tappedLocationData.setFeatures(tappedLocations);
+
+                return false;
+            }
+        });
     }
 
     @Override
