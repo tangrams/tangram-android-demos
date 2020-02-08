@@ -9,10 +9,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.mapzen.tangram.MapController;
 import com.mapzen.tangram.MapView;
 import com.mapzen.tangram.SceneUpdate;
+import com.mapzen.tangram.networking.DefaultHttpHandler;
+import com.mapzen.tangram.networking.HttpHandler;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Cache;
+import okhttp3.CacheControl;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 public class MainActivity extends AppCompatActivity implements MapView.MapReadyCallback {
 
@@ -22,6 +32,25 @@ public class MainActivity extends AppCompatActivity implements MapView.MapReadyC
     SceneUpdate apiKeySceneUpdate = new SceneUpdate("global.sdk_api_key", BuildConfig.NEXTZEN_API_KEY);
     String sceneFilePath = "bubble-wrap/bubble-wrap-style.yaml";
 
+    HttpHandler getHttpHandler() {
+        return new DefaultHttpHandler() {
+            @Override
+            protected void configureClient(OkHttpClient.Builder builder) {
+                File cacheDir = getExternalCacheDir();
+                if (cacheDir != null && cacheDir.exists()) {
+                    builder.cache(new Cache(cacheDir, 64 * 1024 * 1024));
+                }
+            }
+            CacheControl tileCacheControl = new CacheControl.Builder().maxStale(7, TimeUnit.DAYS).build();
+            @Override
+            protected void configureRequest(HttpUrl url, Request.Builder builder) {
+                if ("tile.nextzen.com".equals(url.host())) {
+                    builder.cacheControl(tileCacheControl);
+                }
+            }
+        };
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements MapView.MapReadyC
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);
-        view.getMapAsync(this);
+        view.getMapAsync(this, getHttpHandler());
 
     }
 
