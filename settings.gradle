@@ -1,1 +1,5 @@
 include ':simplemap', ':mapmovement', ':mapgestures', ':featurepicking', ':sceneupdates', ':markers', ':multimap'
+
+// Reference to local project, for testing changes that have not been published yet.
+//include ':tangram-dev'
+//project(':tangram-dev').projectDir = new File(settingsDir, '../tangram-es/platforms/android/tangram')
