@@ -1,1 +1,1 @@
-include ':simplemap', ':mapmovement', ':mapgestures', ':featurepicking', ':sceneupdates', ':markers'
+include ':simplemap', ':mapmovement', ':mapgestures', ':featurepicking', ':sceneupdates', ':markers', ':multimap'
