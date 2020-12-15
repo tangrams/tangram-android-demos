@@ -1,4 +1,4 @@
-include ':simplemap', ':mapmovement', ':mapgestures', ':featurepicking', ':sceneupdates', ':markers', ':multimap'
+include ':tangramdemos'
 
 // Reference to local project, for testing changes that have not been published yet.
 //include ':tangram-dev'

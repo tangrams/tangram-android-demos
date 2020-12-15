@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mapzen.tangramdemos">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Androidtangramdemos">
+        <activity android:name=".DemoMainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".FeaturePickingActivity"/>
+        <activity android:name=".MapGesturesActivity"/>
+        <activity android:name=".MapMovementActivity"/>
+        <activity android:name=".MarkersActivity"/>
+        <activity android:name=".MultiMapActivity"/>
+        <activity android:name=".SceneUpdatesActivity"/>
+        <activity android:name=".SimpleMapActivity"/>
+    </application>
+
+</manifest>

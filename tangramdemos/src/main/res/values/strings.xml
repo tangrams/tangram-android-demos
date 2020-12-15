@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Tangram Demos</string>
+    <string name="featurepicking_title">Feature Picking</string>
+    <string name="featurepicking_detail">Select visible features and labels</string>
+    <string name="mapgestures_title">Map Gestures</string>
+    <string name="mapgestures_detail">Respond to gestures on the map view</string>
+    <string name="mapmovement_title">Map Movement</string>
+    <string name="mapmovement_detail">Move the map programmatically</string>
+    <string name="markers_title">Markers</string>
+    <string name="markers_detail">Add markers to the map view</string>
+    <string name="multimap_title">Multi-Map</string>
+    <string name="multimap_detail">Combine multiple map views</string>
+    <string name="sceneupdates_title">Scene Updates</string>
+    <string name="sceneupdates_detail">Modify the scene file on the fly</string>
+    <string name="simplemap_title">Simple Map</string>
+    <string name="simplemap_detail">Basic map sample</string>
+    <string name="wtc">World Trade Center</string>
+    <string name="esb">Empire State Building</string>
+    <string name="cpz">Central Park Zoo</string>
+</resources>
