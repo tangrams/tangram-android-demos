@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mapzen.tangram.demos.simplemap.com.mapzen.tangramdemos.SimpleMapActivity">
+    tools:context=".SimpleMapActivity">
 
     <com.mapzen.tangram.MapView
         android:id="@+id/map"
