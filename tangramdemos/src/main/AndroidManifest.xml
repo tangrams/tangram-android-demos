@@ -16,13 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FeaturePickingActivity"/>
-        <activity android:name=".MapGesturesActivity"/>
-        <activity android:name=".MapMovementActivity"/>
-        <activity android:name=".MarkersActivity"/>
-        <activity android:name=".MultiMapActivity"/>
-        <activity android:name=".SceneUpdatesActivity"/>
-        <activity android:name=".SimpleMapActivity"/>
+        <activity android:name=".FeaturePickingActivity" android:parentActivityName=".DemoMainActivity"/>
+        <activity android:name=".MapGesturesActivity" android:parentActivityName=".DemoMainActivity"/>
+        <activity android:name=".MapMovementActivity" android:parentActivityName=".DemoMainActivity"/>
+        <activity android:name=".MarkersActivity" android:parentActivityName=".DemoMainActivity"/>
+        <activity android:name=".MultiMapActivity" android:parentActivityName=".DemoMainActivity"/>
+        <activity android:name=".SceneUpdatesActivity" android:parentActivityName=".DemoMainActivity"/>
+        <activity android:name=".SimpleMapActivity" android:parentActivityName=".DemoMainActivity"/>
     </application>
 
 </manifest>

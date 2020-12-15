@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapzen.tangram.CameraPosition;
@@ -42,6 +43,12 @@ public class MapMovementActivity extends AppCompatActivity implements MapView.Ma
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapmovement);
+
+        // Set up back button to return to the demo list.
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);

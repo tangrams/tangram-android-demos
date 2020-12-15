@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapzen.tangram.FeaturePickListener;
@@ -27,6 +28,12 @@ public class FeaturePickingActivity extends AppCompatActivity implements MapView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_featurepicking);
+
+        // Set up back button to return to the demo list.
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);

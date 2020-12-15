@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapzen.tangram.LngLat;
@@ -43,6 +44,12 @@ public class MarkersActivity extends AppCompatActivity implements MapView.MapRea
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_markers);
+
+        // Set up back button to return to the demo list.
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);
