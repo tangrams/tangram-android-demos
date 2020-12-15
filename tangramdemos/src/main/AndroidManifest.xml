@@ -19,30 +19,37 @@
         <activity
             android:name=".FeaturePickingActivity"
             android:label="@string/featurepicking_title"
+            android:exported="true"
             android:parentActivityName=".DemoMainActivity"/>
         <activity
             android:name=".MapGesturesActivity"
             android:label="@string/mapgestures_title"
+            android:exported="true"
             android:parentActivityName=".DemoMainActivity"/>
         <activity
             android:name=".MapMovementActivity"
             android:label="@string/mapmovement_title"
+            android:exported="true"
             android:parentActivityName=".DemoMainActivity"/>
         <activity
             android:name=".MarkersActivity"
             android:label="@string/markers_title"
+            android:exported="true"
             android:parentActivityName=".DemoMainActivity"/>
         <activity
             android:name=".MultiMapActivity"
             android:label="@string/multimap_title"
+            android:exported="true"
             android:parentActivityName=".DemoMainActivity"/>
         <activity
             android:name=".SceneUpdatesActivity"
             android:label="@string/sceneupdates_title"
+            android:exported="true"
             android:parentActivityName=".DemoMainActivity"/>
         <activity
             android:name=".SimpleMapActivity"
             android:label="@string/simplemap_title"
+            android:exported="true"
             android:parentActivityName=".DemoMainActivity"/>
     </application>
 
