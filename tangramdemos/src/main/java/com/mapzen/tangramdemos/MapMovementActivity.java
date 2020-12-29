@@ -52,7 +52,7 @@ public class MapMovementActivity extends AppCompatActivity implements MapView.Ma
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);
-        view.getMapAsync(this);
+        view.getMapAsync(this, new CachingHttpHandler(getExternalCacheDir()));
     }
 
     @Override

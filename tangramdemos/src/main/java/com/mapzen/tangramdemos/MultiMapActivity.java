@@ -10,6 +10,7 @@ import com.mapzen.tangram.MapController;
 import com.mapzen.tangram.MapView;
 import com.mapzen.tangram.SceneUpdate;
 import com.mapzen.tangram.TouchInput;
+import com.mapzen.tangram.networking.HttpHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,9 @@ public class MultiMapActivity extends AppCompatActivity implements TouchInput.Ro
         viewTop.onCreate(savedInstanceState);
         viewBottom.onCreate(savedInstanceState);
 
+        // Create an HttpHandler to cache map tiles.
+        HttpHandler httpHandler = new CachingHttpHandler(getExternalCacheDir());
+
         // This starts a background process to set up the map.
         viewTop.getMapAsync(new MapView.MapReadyCallback() {
             @Override
@@ -50,14 +54,14 @@ public class MultiMapActivity extends AppCompatActivity implements TouchInput.Ro
                 mapTop = mapController;
                 MultiMapActivity.this.onMapReady(mapController);
             }
-        });
+        }, httpHandler);
         viewBottom.getMapAsync(new MapView.MapReadyCallback() {
             @Override
             public void onMapReady(@Nullable MapController mapController) {
                 mapBottom = mapController;
                 MultiMapActivity.this.onMapReady(mapController);
             }
-        });
+        }, httpHandler);
     }
 
     public void onMapReady(MapController mapController) {

@@ -53,7 +53,7 @@ public class MarkersActivity extends AppCompatActivity implements MapView.MapRea
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);
-        view.getMapAsync(this);
+        view.getMapAsync(this, new CachingHttpHandler(getExternalCacheDir()));
 
         clearButton = (Button)findViewById(R.id.clear_button);
     }

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.mapzen.tangram.MapController;
 import com.mapzen.tangram.MapView;
 import com.mapzen.tangram.SceneUpdate;
+import com.mapzen.tangram.networking.HttpHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +38,11 @@ public class SimpleMapActivity extends AppCompatActivity implements MapView.MapR
         // Lifecycle events from the Activity must be forwarded to the MapView.
         view.onCreate(savedInstanceState);
 
+        // Create an HttpHandler to cache map tiles.
+        HttpHandler httpHandler = new CachingHttpHandler(getExternalCacheDir());
+
         // This starts a background process to set up the map.
-        view.getMapAsync(this);
+        view.getMapAsync(this, httpHandler);
     }
 
     @Override

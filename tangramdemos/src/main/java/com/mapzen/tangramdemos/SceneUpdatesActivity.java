@@ -36,7 +36,7 @@ public class SceneUpdatesActivity extends AppCompatActivity implements MapView.M
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);
-        view.getMapAsync(this);
+        view.getMapAsync(this, new CachingHttpHandler(getExternalCacheDir()));
 
     }
 

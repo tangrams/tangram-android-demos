@@ -13,6 +13,7 @@ import com.mapzen.tangram.MapController;
 import com.mapzen.tangram.MapView;
 import com.mapzen.tangram.SceneUpdate;
 import com.mapzen.tangram.TouchInput;
+import com.mapzen.tangram.networking.HttpHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class FeaturePickingActivity extends AppCompatActivity implements MapView
 
         view = (MapView)findViewById(R.id.map);
         view.onCreate(savedInstanceState);
-        view.getMapAsync(this);
+        view.getMapAsync(this, new CachingHttpHandler(getExternalCacheDir()));
 
         textWindow = (TextView)findViewById(R.id.textWindow);
         textWindow.setText("Tap an icon on the map.");
