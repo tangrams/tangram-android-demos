@@ -14,6 +14,8 @@
     <string name="sceneupdates_detail">Modify the scene file on the fly</string>
     <string name="simplemap_title">Simple Map</string>
     <string name="simplemap_detail">Basic map sample</string>
+    <string name="translucency_title">Translucent Map</string>
+    <string name="translucency_detail">Render a map with translucency</string>
     <string name="wtc">World Trade Center</string>
     <string name="esb">Empire State Building</string>
     <string name="cpz">Central Park Zoo</string>

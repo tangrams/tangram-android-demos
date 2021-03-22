@@ -51,6 +51,11 @@
             android:label="@string/simplemap_title"
             android:exported="true"
             android:parentActivityName=".DemoMainActivity"/>
+        <activity
+            android:name=".TranslucentMapActivity"
+            android:label="@string/translucency_title"
+            android:exported="true"
+            android:parentActivityName=".DemoMainActivity"/>
     </application>
 
 </manifest>

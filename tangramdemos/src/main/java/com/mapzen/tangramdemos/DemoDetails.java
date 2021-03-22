@@ -52,5 +52,6 @@ public class DemoDetails {
             new DemoDetails(R.string.markers_title, R.string.markers_detail, MarkersActivity.class),
             new DemoDetails(R.string.multimap_title, R.string.multimap_detail, MultiMapActivity.class),
             new DemoDetails(R.string.sceneupdates_title, R.string.sceneupdates_detail, SceneUpdatesActivity.class),
+            new DemoDetails(R.string.translucency_title, R.string.translucency_detail, TranslucentMapActivity.class),
     };
 }
