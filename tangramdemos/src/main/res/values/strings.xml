@@ -16,7 +16,14 @@
     <string name="simplemap_detail">Basic map sample</string>
     <string name="translucency_title">Translucent Map</string>
     <string name="translucency_detail">Render a map with translucency</string>
+    <string name="viewpadding_title">View padding sample</string>
+    <string name="viewpadding_detail">Change the relative position of the map center</string>
     <string name="wtc">World Trade Center</string>
     <string name="esb">Empire State Building</string>
     <string name="cpz">Central Park Zoo</string>
+    <string name="viewpadding_checkbox_label"> Apply view padding </string>
+    <string name="viewpadding_explanation">
+        When view padding is applied, the center position of the map is drawn in the center of the area inside the padding - not the center of the entire view.
+        Gesture input like rotation is also interpreted relative to the center of the padded area.
+    </string>
 </resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.mapzen.tangram.MapView
+        android:id="@+id/map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </com.mapzen.tangram.MapView>
+
+    <LinearLayout
+        android:id="@+id/layout_viewpadding_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@android:color/background_light"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <CheckBox
+            android:id="@+id/checkbox_viewpadding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/viewpadding_checkbox_label" />
+
+        <TextView
+            android:id="@+id/text_viewpadding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/viewpadding_explanation" />
+
+    </LinearLayout>
+
+</RelativeLayout>

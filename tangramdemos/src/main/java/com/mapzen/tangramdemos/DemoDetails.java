@@ -53,5 +53,6 @@ public class DemoDetails {
             new DemoDetails(R.string.multimap_title, R.string.multimap_detail, MultiMapActivity.class),
             new DemoDetails(R.string.sceneupdates_title, R.string.sceneupdates_detail, SceneUpdatesActivity.class),
             new DemoDetails(R.string.translucency_title, R.string.translucency_detail, TranslucentMapActivity.class),
+            new DemoDetails(R.string.viewpadding_title, R.string.viewpadding_detail, ViewPaddingActivity.class),
     };
 }

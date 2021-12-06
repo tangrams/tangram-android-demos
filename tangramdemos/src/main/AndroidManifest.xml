@@ -56,6 +56,11 @@
             android:label="@string/translucency_title"
             android:exported="true"
             android:parentActivityName=".DemoMainActivity"/>
+        <activity
+            android:name=".ViewPaddingActivity"
+            android:label="@string/viewpadding_title"
+            android:exported="true"
+            android:parentActivityName=".DemoMainActivity"/>
     </application>
 
 </manifest>
